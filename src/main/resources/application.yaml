@@ -7,9 +7,18 @@ eureka:
 spring:
   application:
     name: ms01-api-gateway
-  #cloud:
-  #  gateway:
-  #    discovery:
-  #      locator:
-  #        enabled: true
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
   #        lower-case-service-id: true
+      routes:
+        - id: MS01-BOOK-SERVICE
+          uri: lb://MS01-BOOK-SERVICE
+          predicates:
+            - Path=/v1/book-service/**
+        - id: MS01-BOOK-SERVICE
+          uri: lb://MS01-CAMBIO-SERVICE
+          predicates:
+            - Path=/v1/cambio-service/**
